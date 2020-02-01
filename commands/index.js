@@ -10,8 +10,11 @@ import EXPIRE from "./data interaction/EXPIRE.command";
 import TTL from "./data interaction/TTL.command";
 import SAVE from "./snapshot/SAVE.command";
 import RESTORE from "./snapshot/RESTORE.command";
+import PING from "./data interaction/PING.command";
+import FLUSHALL from "./data interaction/FLUSHALL.command";
 
 const commands = {
+  'PING': new PING(),
   'SET': new SET(),
   'GET': new GET(),
   'SADD': new SADD(),
@@ -23,7 +26,8 @@ const commands = {
   'EXPIRE': new EXPIRE(),
   'TTL': new TTL(),
   'SAVE': new SAVE(),
-  'RESTORE': new RESTORE()
+  'RESTORE': new RESTORE(),
+  'FLUSHALL': new FLUSHALL()
 };
 
 export default commands;

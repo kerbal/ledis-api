@@ -1,12 +1,13 @@
 import fs from 'fs';
+import IOService from '../services/io.service';
 
 class Store {
   constructor() {
-    this.data = new Map();
+    this.map = new Map();
   }
 
   set(key, value, type) {
-    this.data.set(key, {
+    this.map.set(key, {
       value,
       type,
       expire: {
@@ -17,7 +18,7 @@ class Store {
   }
 
   get(key, type) {
-    const data = this.data.get(key);
+    const data = this.map.get(key);
     if(data) {
       if(data.type === type) {
         return data.value;
@@ -32,23 +33,27 @@ class Store {
   }
 
   keys() {
-    return this.data.keys(); 
+    return this.map.keys(); 
   }
 
   delete(key) {
-    return this.data.delete(key);
+    return this.map.delete(key);
+  }
+
+  deleteAll() {
+    this.map.clear();
   }
 
   size() {
-    return this.data.size;
+    return this.map.size;
   }
 
   has(key) {
-    return this.data.has(key);
+    return this.map.has(key);
   }
 
   expire(key, time) {
-    const data = this.data.get(key);
+    const data = this.map.get(key);
     if(data) {
       clearTimeout(data.expire.trigger);
       data.expire = {
@@ -65,7 +70,7 @@ class Store {
   }
 
   getTimeout(key) {
-    const data = this.data.get(key);
+    const data = this.map.get(key);
     if(data) {
       if(data.expire.time >= 0) {
         return Number.parseInt((data.expire.time - new Date().getTime()) / 1000);
@@ -79,38 +84,32 @@ class Store {
     }
   }
 
-  save() {
-    const data = new Array(...this.data);
+  async save() {
+    const data = new Array(...this.map);
     const jsonData = JSON.stringify(data.map(d => {
       d[1].expire.trigger = undefined;
       return d;
     }));
-    fs.writeFile('./snapshot/file.ldb', jsonData, (error) => {
-      if(error) {
-        console.log(error);
-        throw new Error(error.message);
-      }
-    });
+    const response = await IOService.writeFile('./snapshot/file.ldb', jsonData);
+    if(response) {
+      return true;
+    }
+    else {
+      throw new Error(response);
+    }
   }
 
-  restore() {
-    fs.readFile('./snapshot/file.ldb', 'utf8', (error, file_data) => {
-      if(error) {
-        console.log(error);
-        throw new Error(error.message);
+  async restore() {
+    const json = await IOService.readFile('./snapshot/file.ldb');
+    const data = JSON.parse(json).map(d => {
+      if(d[1].expire.time >= 0) {
+        d[1].expire.trigger = setTimeout(() => {
+          store.delete(d[0]);
+        }, Math.max(Number.parseInt((d[1].expire.time - new Date().getTime())), 0))
       }
-      else {
-        const data = JSON.parse(file_data).map(d => {
-          if(d[1].expire.time >= 0) {
-            d[1].expire.trigger = setTimeout(() => {
-              store.delete(d[0]);
-            }, Math.max(Number.parseInt((d[1].expire.time - new Date().getTime())), 0))
-          }
-          return d;
-        });
-        this.data = new Map(data);
-      }
+      return d;
     });
+    this.map = new Map(data);
   }
 }
 
