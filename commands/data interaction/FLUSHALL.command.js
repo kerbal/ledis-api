@@ -5,6 +5,7 @@ class FLUSHALL extends Command {
   constructor() {
     super({
       name: 'FLUSHALL',
+      description: 'Remove all keys',
       args: []
     });
   }

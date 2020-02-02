@@ -5,6 +5,7 @@ class SMEMBERS extends Command {
   constructor() {
     super({
       name: 'SMEMBERS',
+      description: 'Return array of all members of set.',
       args: [{
         name: 'key',
         type: 'string'

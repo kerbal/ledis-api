@@ -5,6 +5,7 @@ class RESTORE extends Command {
   constructor() {
     super({
       name: 'RESTORE',
+      description: 'Restore from the last snapshot.',
       args: []
     });
   }

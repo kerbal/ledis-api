@@ -5,6 +5,7 @@ class SAVE extends Command {
   constructor() {
     super({
       name: 'SAVE',
+      description: 'Save current state in a snapshot.',
       args: []
     });
   }

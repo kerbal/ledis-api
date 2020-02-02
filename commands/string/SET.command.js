@@ -5,14 +5,13 @@ class SET extends Command {
   constructor() {
     super({
       name: 'SET',
+      description: 'Get a string value at key.',
       args: [{
         name: 'key',
-        type: 'string',
-        required: true
+        type: 'string'
       }, {
         name: 'value',
-        type: 'string',
-        required: true
+        type: 'string'
       }]
     });
   }

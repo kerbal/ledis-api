@@ -5,6 +5,7 @@ class TTL extends Command {
   constructor() {
     super({
       name: 'TTL',
+      description: 'Return the timeout of a key.',
       args: [{
         name: 'key',
         type: 'string'

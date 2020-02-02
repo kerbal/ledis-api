@@ -1,7 +1,8 @@
 class Command {
-  constructor({ name = '', args = []}) {
+  constructor({ name = '', args = [], description = '' }) {
     this.name = name;
     this.args = args;
+    this.description = description;
   }
 
   getNumberOfargs () {

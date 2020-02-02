@@ -4,6 +4,7 @@ class PING extends Command {
   constructor() {
     super({
       name: 'PING',
+      description: 'Check the connection. Return PONG as success.',
       args: []
     });
   }

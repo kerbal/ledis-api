@@ -5,6 +5,7 @@ class KEYS extends Command {
   constructor () {
     super({
       name: 'KEYS',
+      description: 'List all available keys.',
       args: []
     });
   }

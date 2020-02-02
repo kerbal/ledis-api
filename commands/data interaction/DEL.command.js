@@ -5,6 +5,7 @@ class DEL extends Command {
   constructor() {
     super({
       name: 'DEL',
+      description: 'Delete keys.',
       args: [{
         name: 'keys',
         type: 'array'

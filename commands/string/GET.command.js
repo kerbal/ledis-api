@@ -5,10 +5,10 @@ class GET extends Command {
   constructor () {
     super({
       name: 'GET',
+      description: 'Set a string value, always overwriting what is saved under key.',
       args: [{
         name: 'key',
-        type: 'string',
-        required: true
+        type: 'string'
       }]
     });
   }

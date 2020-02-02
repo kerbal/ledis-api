@@ -5,6 +5,7 @@ class SADD extends Command {
   constructor() {
     super({
       name: 'SADD',
+      description: 'Add values to set stored at key.',
       args: [{
         name: 'key',
         type: 'string',

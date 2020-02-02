@@ -5,6 +5,7 @@ class SINTER extends Command {
   constructor() {
     super({
       name: 'SINTER',
+      description: 'Set intersection among all set stored in specifie keys. Return array of members of the result set.',
       args: [{
         name: 'keys',
         type: 'array'

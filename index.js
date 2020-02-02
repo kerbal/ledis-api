@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import CommandService from './services/command.service';
 import store from './store/store';
+import HelpService from './services/help.service';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,6 +30,10 @@ app.get('/api/execute', (req, res) => {
     });
   }
 });
+
+app.get('/api/help', (req, res) => {
+  res.status(200).send(HelpService.getHelp());
+})
 
 const port = process.env.PORT || 3001;
 app.listen(port, async () => {

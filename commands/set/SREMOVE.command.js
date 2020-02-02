@@ -5,6 +5,7 @@ class SREMOVE extends Command {
   constructor() {
     super({
       name: 'SREM',
+      description: 'Remove values from set',
       args: [{
         name: 'key',
         type: 'string',
